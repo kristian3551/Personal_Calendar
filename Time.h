@@ -1,6 +1,6 @@
 #ifndef TIME_H
 #define TIME_H
-#include "String.h"
+#include "String/String.h"
 
 class Time {
     unsigned hours;
