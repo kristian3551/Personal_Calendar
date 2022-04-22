@@ -11,8 +11,7 @@ class Time {
     void setMinutes(unsigned minutes);
     void setSeconds(unsigned seconds);
 public:
-    Time() = default;
-    Time(unsigned hours, unsigned minutes, unsigned seconds);
+    Time(unsigned hours = 0, unsigned minutes = 0, unsigned seconds = 0);
     void setTime(unsigned, unsigned, unsigned);
     unsigned getHours() const;
     unsigned getMinutes() const;
