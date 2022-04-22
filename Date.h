@@ -1,6 +1,6 @@
 #ifndef DATE_H
 #define DATE_H
-#include "String.h"
+#include "String\String.h"
 
 class Date {
     unsigned day;
@@ -10,7 +10,7 @@ class Date {
     unsigned daysInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     void setDayOfWeek();
 public:
-    Date(unsigned day = 1, unsigned month = 1, unsigned year = 1);
+    Date(unsigned day = 31, unsigned month = 3, unsigned year = 1916);
     Date(unsigned day, unsigned month, unsigned year, unsigned dayOfWeek);
     void setDay(unsigned day);
     void setMonth(unsigned month);
@@ -22,6 +22,8 @@ public:
     unsigned getDayOfWeek() const;
     bool operator ==(const Date&) const;
     bool operator !=(const Date&) const;
+    bool operator <(const Date&) const;
+    bool operator >(const Date&) const;
     String toString() const;
 };
 
