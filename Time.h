@@ -20,6 +20,7 @@ public:
     bool operator <(const Time&) const;
     bool operator >(const Time&) const;
     bool operator ==(const Time&) const;
+    String toString() const;
 };
 
 #endif

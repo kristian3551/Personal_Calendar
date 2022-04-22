@@ -2,18 +2,20 @@
 
 Time::Time(unsigned hours, unsigned minutes, unsigned seconds) {
     setHours(hours);
+    setMinutes(minutes);
+    setSeconds(seconds);
 }
 void Time::setHours(unsigned hours) {
-    if(hours > 24)
-        hours = 0;
+    if(hours >= 24)
+        hours -= 24;
     this->hours = hours;
 }
 void Time::setMinutes(unsigned minutes) {
-    if(minutes > 60) minutes = 0;
+    if(minutes >= 60) minutes -= 60;;
     this->minutes = minutes;
 }
 void Time::setSeconds(unsigned seconds) {
-    if(seconds > 60) seconds = 0;
+    if(seconds >= 60) seconds -= 60;
     this->seconds = seconds;
 }
 
@@ -45,4 +47,9 @@ bool Time::operator >(const Time& time) const {
 }
 bool Time::operator ==(const Time& time) const {
     return convertInSeconds() == time.convertInSeconds();
+}
+
+String Time::toString() const {
+    return String(hours).concat(":").concat(String(minutes))
+        .concat(":").concat(String(seconds));
 }
