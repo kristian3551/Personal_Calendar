@@ -1,6 +1,6 @@
 #ifndef EVENT_H
 #define EVENT_H
-#include "String.h"
+#include "String/String.h"
 #include "Time.h"
 #include "Date.h"
 
@@ -12,8 +12,8 @@ class Event {
     Time endTime;
 public:
     Event() = default;
-    Event(const String& name, const String& comment, const Date& date, const Time& startTime,
-        const Time& endTime);
+    Event(const String&, const String&, const Date&, const Time&,
+        const Time&);
     String getName() const;
     String getComment() const;
     Date getDate() const;

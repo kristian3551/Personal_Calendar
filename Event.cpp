@@ -1,10 +1,12 @@
 #include "Event.h"
+#include <iostream>
 
-Event::Event(const String& name, const String& comment, const Date& date, const Time& startTime,
+Event::Event(const String& name, const String& comment, const Date& date,
+        const Time& startTime,
         const Time& endTime) {
-            this->name = name;
-            this->comment = comment;
-            this->date = date;
+            setName(name);
+            setComment(comment);
+            setDate(date);
             this->startTime = startTime;
             this->endTime = endTime;
         }
