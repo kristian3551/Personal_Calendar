@@ -9,8 +9,10 @@ class Date {
     unsigned dayOfWeek;
     unsigned daysInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     void setDayOfWeek();
+    void fixChangeInCalendar();
 public:
-    Date(unsigned day = 31, unsigned month = 3, unsigned year = 1916);
+    Date();
+    Date(unsigned day , unsigned month , unsigned year);
     Date(unsigned day, unsigned month, unsigned year, unsigned dayOfWeek);
     void setDay(unsigned day);
     void setMonth(unsigned month);

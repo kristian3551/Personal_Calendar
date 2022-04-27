@@ -1,5 +1,12 @@
 #include "Date.h"
 
+Date::Date() {
+    day = 31;
+    month = 3;
+    year = 1916;
+    dayOfWeek = 5;
+}
+
 Date::Date(unsigned day, unsigned month, unsigned year) {
     setYear(year);
     setMonth(month);
@@ -29,15 +36,18 @@ void Date::setDay(unsigned day) {
     if(day > daysInMonth[month - 1])
         day = 1;
     this->day = day;
+    setDayOfWeek();
 }
 void Date::setMonth(unsigned month) {
     if(month > 12) month = 1;
     this->month = month;
+    setDayOfWeek();
 }
 void Date::setYear(unsigned year) {
     this->year = year;
     if(year % 4 == 0 && year % 100 != 0 || year % 400 == 0) daysInMonth[1] = 29;
     else daysInMonth[1] = 28;
+    setDayOfWeek();
 }
 
 void Date::incrementDay() {
@@ -84,4 +94,9 @@ bool Date::operator >(const Date& date) const {
 String Date::toString() const {
     return String(day).concat(" ").concat(String(month))
     .concat(" ").concat(String(year));
+}
+
+void Date::fixChangeInCalendar() {
+    if(year == 1916 && month == 4 && day >= 1 && day <= 13)
+        day = 15;
 }
