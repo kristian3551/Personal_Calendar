@@ -81,7 +81,7 @@ void Calendar::printDay(const Date& date) const {
         return;
     }
     for(int i = 0; i < days[index].getSize(); i++) {
-        cout << *days[index].getEvents()[i] << endl;
+        (*days[index].getEvents()[i]).print();
     }
 }
 void Calendar::printEventsByString(const String& str) const {
