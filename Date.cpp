@@ -36,18 +36,17 @@ void Date::setDay(unsigned day) {
     if(day > daysInMonth[month - 1])
         day = 1;
     this->day = day;
-    setDayOfWeek();
 }
 void Date::setMonth(unsigned month) {
     if(month > 12) month = 1;
     this->month = month;
-    setDayOfWeek();
+    
 }
 void Date::setYear(unsigned year) {
     this->year = year;
     if(year % 4 == 0 && year % 100 != 0 || year % 400 == 0) daysInMonth[1] = 29;
     else daysInMonth[1] = 28;
-    setDayOfWeek();
+    
 }
 
 void Date::incrementDay() {
