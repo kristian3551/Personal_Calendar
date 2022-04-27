@@ -215,7 +215,6 @@ void Calendar::getStatsForPeriodInFile(const Date& date1, const Date& date2) {
     }
     String filePath = String().concat(date1.getYear()).concat("-").concat(date1.getMonth())
         .concat("-").concat(date1.getDay()).concat(".txt");
-    cout << filePath.toString() << endl;
     ofstream file(filePath.toString());
     for(int i = 0; i < 7; i++) {
         switch(i) {

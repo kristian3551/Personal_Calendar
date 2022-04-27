@@ -5,6 +5,7 @@
 #include "Event.h"
 #include "DaySchedule.h"
 #include "Calendar.h"
+#include "Controller.h"
 using namespace std;
 
 // cd "f:\FMI resources\Summer semester\Object-oriented programming\Private-calendar\" ;
@@ -18,6 +19,6 @@ int main() {
     // Event event1("Name2", "Some comment2", date, Time(13, 00, 00), Time(15, 0, 0));
     // Event event2("Name3", "Some comment3", Date(2, 5, 2022), startTime, endTime);
     // Event event3("Name4", "Some comment4", Date(3, 5, 2022), startTime, endTime);
-    Calendar calendar;
-    calendar.printEventsByString("");
+    Controller controller;
+    controller.run();
 }
