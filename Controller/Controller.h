@@ -1,6 +1,6 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
-#include "Calendar.h"
+#include "../Calendar/Calendar.h"
 
 class Controller {
     Calendar calendar;

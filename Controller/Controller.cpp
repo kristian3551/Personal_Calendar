@@ -67,6 +67,7 @@ void Controller::showDayEvents() {
     cin >> day >> month >> year;
     Date date(day, month, year);
     printDelimiter();
+    cout << "Events: " << endl;
     calendar.printDay(date);
 }
 
@@ -93,6 +94,7 @@ void Controller::changeEvent() {
     printDelimiter();
     cout << "Enter type of property (name, comment, date, startTime, endTime): ";
     char property[MAX_PROPERTY_LENGTH];
+    cin.ignore();
     cin.getline(property, MAX_PROPERTY_LENGTH);
     if(!strcmp(property, "name")) {
         cout << "Enter name: ";
@@ -155,6 +157,7 @@ void Controller::searchByString() {
     char substring[MAX_COMMENT_LENGTH];
     cin.getline(substring, MAX_COMMENT_LENGTH);
     printDelimiter();
+    cout << "Events: " << endl;
     calendar.printEventsByString(substring); 
 }
 

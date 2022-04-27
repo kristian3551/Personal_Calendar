@@ -1,6 +1,6 @@
 #ifndef DATE_H
 #define DATE_H
-#include "String\String.h"
+#include "../String/String.h"
 
 class Date {
     unsigned day;

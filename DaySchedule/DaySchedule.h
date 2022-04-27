@@ -1,7 +1,7 @@
 #ifndef SCHEDULE_H
 #define SCHEDULE_H
-#include "Event.h"
-#include "Date.h"
+#include "../Event/Event.h"
+#include "../Date/Date.h"
 
 class DaySchedule {
     Date date;

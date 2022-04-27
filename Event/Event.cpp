@@ -66,6 +66,5 @@ void Event::print() const {
     cout << "Comment: " << comment << endl;
     cout << "Date: " << date.getDay() << "/" << date.getMonth() << "/" << date.getYear() << endl;
     cout << "From " << startTime.getHours() << ":" << startTime.getMinutes() << ":" << startTime.getSeconds();
-    cout << " to " << endTime.getHours() << ":" << endTime.getMinutes() << ":" << endTime.getSeconds() << endl 
-    << "---------------" << endl;
+    cout << " to " << endTime.getHours() << ":" << endTime.getMinutes() << ":" << endTime.getSeconds() << endl;
 }

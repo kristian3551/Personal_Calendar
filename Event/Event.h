@@ -1,8 +1,8 @@
 #ifndef EVENT_H
 #define EVENT_H
-#include "String/String.h"
-#include "Time.h"
-#include "Date.h"
+#include "../String/String.h"
+#include "../Time/Time.h"
+#include "../Date/Date.h"
 #include <iostream>
 
 class Event {
