@@ -290,6 +290,15 @@ void Calendar::readFromFile() {
     }
 }
 
+void Calendar::findFreeTimeForEvent(const Date& date, const Time& time) const {
+    int dayIndex = getDayIndexByDate(date);
+    if(dayIndex == -1) {
+        cout << "The whole day is free!" << endl;
+        return;
+    }
+    days[dayIndex].findFreeTimeForEvent(time);
+}
+
 Calendar::~Calendar() {
     saveInFile();
     free();

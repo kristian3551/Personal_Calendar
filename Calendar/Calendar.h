@@ -31,6 +31,7 @@ public:
     bool changeStartTime(const Event&, const Time&);
     bool changeEndTime(const Event&, const Time&);
     void getStatsForPeriodInFile(const Date&, const Date&);
+    void findFreeTimeForEvent(const Date&, const Time&) const;
     Calendar& operator=(const Calendar&);
     ~Calendar();   
 };

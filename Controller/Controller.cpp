@@ -161,9 +161,22 @@ void Controller::searchByString() {
     calendar.printEventsByString(substring); 
 }
 
+void Controller::findFreeTimeForEvent() {
+    cout << "You chose to find a free hour for event!" << endl;
+    cout << "Enter date (3 consequent numbers): ";
+    int day, month, year;
+    cin >> day >> month >> year;
+    Date date(day, month, year);
+    cout << "Enter time (3 consequent numbers): ";
+    int hours, minutes, seconds;
+    cin >> hours >> minutes >> seconds;
+    Time time(hours, minutes, seconds);
+    calendar.findFreeTimeForEvent(date, time);
+}
+
 void Controller::run() {
     cout << "Hello to my application!" << endl;
-    cout << "You can switch between 6 commands. Type a number (between 1 and 6) to choose the command and type -1 to exit! Enjoy!" << endl;
+    cout << "You can switch between 7 commands. Type a number (between 1 and 7) to choose the command and type -1 to exit! Enjoy!" << endl;
     int command = 0;
     while(command != -1) {
         cout << "Enter command: ";
@@ -187,6 +200,9 @@ void Controller::run() {
             } break;
             case 6: {
                 getStatsForEmployment();
+            } break;
+            case 7: {
+                findFreeTimeForEvent();
             } break;
             default: command = -1;
         }

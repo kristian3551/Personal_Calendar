@@ -2,6 +2,9 @@
 #include <iostream>
 using namespace std;
 
+const Time WORK_TIME_START(8, 0, 0);
+const Time WORK_TIME_END(18, 0, 0);
+
 void DaySchedule::resize() {
     capacity *= 2;
     Event** ptr = new Event*[capacity];
@@ -88,6 +91,7 @@ bool DaySchedule::removeEvent(const Event& event) {
     size--;
     return true;
 }
+
 bool DaySchedule::find(const Event& event) {
     for(int i = 0; i < size; i++) {
         if(*events[i] == event) return true;
@@ -103,6 +107,24 @@ int DaySchedule::getSize() const {
 
 Date DaySchedule::getDate() const {
     return date;
+}
+
+void DaySchedule::findFreeTimeForEvent(const Time& time) const {
+    if(size == 0 || (time + WORK_TIME_START) <= events[0]->getStartTime()) {
+        cout << "Available hour: " << WORK_TIME_START.toString() << endl;
+        return;
+    }
+    if((events[size - 1]->getEndTime() + time) <= WORK_TIME_END) {
+        cout << "Available hour: " << events[size - 1]->getEndTime().toString() << endl;
+        return;
+    }
+    for(int i = 0; i < size - 1; i++) {
+        if((events[i]->getEndTime() + time) <= events[i + 1]->getStartTime()) {
+            cout << "Available hour: " << events[i]->getEndTime().toString() << endl;
+            return;
+        }
+    }
+    cout << "There is no available time on this date!" << endl; 
 }
 
 DaySchedule::~DaySchedule() {

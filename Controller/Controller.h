@@ -10,6 +10,7 @@ class Controller {
     void changeEvent();
     void searchByString();
     void getStatsForEmployment();
+    void findFreeTimeForEvent();
 public:
     void run();
 };
