@@ -51,5 +51,5 @@ bool Time::operator ==(const Time& time) const {
 
 String Time::toString() const {
     return String(hours).concat(":").concat(String(minutes))
-        .concat(":").concat(String(seconds));
+        .concat(":").concat(String(seconds)).concat("h");
 }
