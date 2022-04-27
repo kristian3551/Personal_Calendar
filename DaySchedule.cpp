@@ -53,7 +53,6 @@ bool DaySchedule::addEvent(const Event& event) {
         resize();
     for(int i = 0; i < size; i++) {
         if(event.doEventsIntersect(*events[i])) {
-            // send message
             return false;
         }
     }
@@ -81,7 +80,6 @@ bool DaySchedule::removeEvent(const Event& event) {
         }
     }
     if(index == -1) {
-        // send message
         return false;
     }
     for(int i = index + 1; i < size; i++) {

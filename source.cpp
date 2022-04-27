@@ -11,16 +11,13 @@ using namespace std;
 // if ($?) { g++ (Get-ChildItem -Recurse *.cpp) -o source } ; if ($?) { .\source }
 
 int main() {
-    Date date(1, 5, 2022);
-    Time startTime(10, 0, 0);
-    Time endTime(11, 0, 0);
-    String name = "Some name";
-    String comment = "Comment";
-    Event event(name, comment, date, startTime, endTime);
-    Event event1("Name2", "Some comment", date, Time(13, 00, 00), Time(15, 0, 0));
+    // Date date(1, 5, 2022);
+    // Time startTime(10, 0, 0);
+    // Time endTime(11, 0, 0);
+    // Event event("Name1", "Comment1", date, startTime, endTime);
+    // Event event1("Name2", "Some comment2", date, Time(13, 00, 00), Time(15, 0, 0));
+    // Event event2("Name3", "Some comment3", Date(2, 5, 2022), startTime, endTime);
+    // Event event3("Name4", "Some comment4", Date(3, 5, 2022), startTime, endTime);
     Calendar calendar;
-    calendar.addEvent(event);
-    calendar.addEvent(event1);
-    cout << calendar.changeEndTime(event, Time(12, 30, 00));
-    calendar.findEventsByString("");
+    calendar.printEventsByString("");
 }
