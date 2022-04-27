@@ -58,7 +58,7 @@ bool DaySchedule::addEvent(const Event& event) {
     }
     int index = size;
     for(int i = 0; i < size; i++) {
-        if(event.getEndTime() < (*events[i]).getStartTime()) {
+        if(event.getEndTime() <= (*events[i]).getStartTime()) {
             index = i;
             break;
         }
@@ -74,7 +74,7 @@ bool DaySchedule::addEvent(const Event& event) {
 bool DaySchedule::removeEvent(const Event& event) {
     int index = -1;
     for(int i = 0; i < size; i++) {
-        if((*events[i]).getName().equals(event.getName())) {
+        if(*events[i] == event) {
             index = i;
             break;
         }
@@ -90,7 +90,7 @@ bool DaySchedule::removeEvent(const Event& event) {
 }
 bool DaySchedule::find(const Event& event) {
     for(int i = 0; i < size; i++) {
-        if((*events[i]).getName().equals(event.getName())) return true;
+        if(*events[i] == event) return true;
     }
     return false;
 }

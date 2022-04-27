@@ -56,8 +56,8 @@ ostream& operator<<(ostream& os, const Event& event) {
 
 bool Event::doEventsIntersect(const Event& event) const {
     // if(date != event.getDate()) return false;
-    if(endTime < event.startTime) return false;
-    if(startTime > event.endTime) return false;
+    if(endTime <= event.startTime) return false;
+    if(startTime >= event.endTime) return false;
     return true;
 }
 
