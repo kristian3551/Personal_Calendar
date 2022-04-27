@@ -1,10 +1,10 @@
 #ifndef CALENDAR_H
 #define CALENDAR_H
-#include "DaySchedule.h"
-#include "Date.h"
-#include "String.h"
-#include "Time.h"
-#include "Event.h"
+#include "../DaySchedule/DaySchedule.h"
+#include "../Date/Date.h"
+#include "../String/String.h"
+#include "../Time/Time.h"
+#include "../Event/Event.h"
 
 class Calendar {
     DaySchedule* days;

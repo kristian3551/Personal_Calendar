@@ -3,7 +3,7 @@
 #include <fstream>
 using namespace std;
 
-const char* DATABASE_FILE_PATH = "database.txt";
+const char* DATABASE_FILE_PATH = "database.dat";
 
 void Calendar::resize() {
     capacity *= 2;
@@ -26,9 +26,6 @@ void Calendar::copyFrom(const Calendar& calendar) {
 }
 
 Calendar::Calendar() {
-    // capacity = 2;
-    // days = new DaySchedule[capacity];
-    // size = 0;
     readFromFile();
 }
 Calendar::Calendar(const Calendar& calendar) {
@@ -81,6 +78,7 @@ void Calendar::printDay(const Date& date) const {
         return;
     }
     for(int i = 0; i < days[index].getSize(); i++) {
+        cout << "---------" << endl;
         (*days[index].getEvents()[i]).print();
     }
 }
@@ -88,9 +86,13 @@ void Calendar::printEventsByString(const String& str) const {
     for(int i = 0; i < size; i++) {
         const Event** dayEvents = days[i].getEvents();
         for(int j = 0; j < days[i].getSize(); j++) {
+            
             if(dayEvents[j]->getName().contains(str) ||
             dayEvents[j]->getComment().contains(str)) 
-                (*dayEvents[j]).print();
+                {
+                    cout << "---------" << endl;
+                    (*dayEvents[j]).print();
+                }
         }
     }
 }
@@ -256,8 +258,8 @@ void Calendar::readFromFile() {
     if(!file.is_open()) return;
     int countOfDaysInFile = 0;
     file >> countOfDaysInFile;
-    days = new DaySchedule[countOfDaysInFile];
-    capacity = countOfDaysInFile;
+    days = new DaySchedule[countOfDaysInFile + 2];
+    capacity = countOfDaysInFile + 2;
     size = 0;
     int countOfEventsInFile = 0;
     file >> countOfEventsInFile;
