@@ -40,3 +40,22 @@ void Event::setStartTime(const Time& time) {
 void Event::setEndTime(const Time& time) {
     endTime = time;
 }
+
+bool Event::operator ==(const Event& event) const {
+    return name.equals(event.name) && comment.equals(event.comment)
+        && (date == event.date) && (startTime == event.startTime) && (endTime == event.endTime);
+}
+
+std::ostream& operator<<(std::ostream& os, const Event& event) {
+    os << "Name: " << event.name << std::endl 
+        << "Comment: " << event.comment << std::endl << "Date: " << event.date.toString()
+    << std::endl << "From " << event.startTime.toString() << " to " << event.endTime.toString();
+    return os;
+}
+
+bool Event::doEventsIntersect(const Event& event) const {
+    // if(date != event.getDate()) return false;
+    if(endTime < event.startTime) return false;
+    if(startTime > event.endTime) return false;
+    return true;
+}

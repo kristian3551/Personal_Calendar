@@ -3,6 +3,7 @@
 #include "String/String.h"
 #include "Time.h"
 #include "Date.h"
+#include <iostream>
 
 class Event {
     String name;
@@ -24,6 +25,9 @@ public:
     void setDate(const Date&);
     void setStartTime(const Time&);
     void setEndTime(const Time&);
+    bool operator ==(const Event&) const;
+    bool doEventsIntersect(const Event&) const;
+    friend std::ostream& operator<<(std::ostream&, const Event&);
 };
 
 #endif
