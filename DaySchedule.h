@@ -1,8 +1,10 @@
 #ifndef SCHEDULE_H
 #define SCHEDULE_H
 #include "Event.h"
+#include "Date.h"
 
 class DaySchedule {
+    Date date;
     Event** events;
     int size;
     int capacity;
@@ -11,6 +13,7 @@ class DaySchedule {
     void copyFrom(const DaySchedule&);
 public:
     DaySchedule();
+    DaySchedule(const Date&);
     DaySchedule(const DaySchedule&);
     DaySchedule& operator=(const DaySchedule&);
     bool addEvent(const Event&);
@@ -18,6 +21,7 @@ public:
     bool find(const Event&);
     const Event** getEvents() const;
     int getSize() const;
+    Date getDate() const;
     ~DaySchedule();
 };
 

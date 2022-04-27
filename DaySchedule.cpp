@@ -1,4 +1,6 @@
 #include "DaySchedule.h"
+#include <iostream>
+using namespace std;
 
 void DaySchedule::resize() {
     capacity *= 2;
@@ -10,6 +12,8 @@ void DaySchedule::resize() {
     events = ptr;
 }
 void DaySchedule::free() {
+    for(int i = 0; i < size; i++) 
+        delete events[i];
     delete[] events;
 }
 void DaySchedule::copyFrom(const DaySchedule& schedule) {
@@ -19,9 +23,17 @@ void DaySchedule::copyFrom(const DaySchedule& schedule) {
     }
     size = schedule.size;
     capacity = schedule.capacity;
+    date = schedule.date;
 }
 
 DaySchedule::DaySchedule() {
+    capacity = 2;
+    events = new Event*[capacity];
+    size = 0;
+}
+
+DaySchedule::DaySchedule(const Date& date) {
+    this->date = date;
     capacity = 2;
     events = new Event*[capacity];
     size = 0;
@@ -40,12 +52,24 @@ bool DaySchedule::addEvent(const Event& event) {
     if(capacity == size) 
         resize();
     for(int i = 0; i < size; i++) {
-        if(!((*events[i]).getEndTime() < event.getStartTime() || (*events[i]).getStartTime() > event.getEndTime())) {
+        if(event.doEventsIntersect(*events[i])) {
             // send message
             return false;
         }
     }
-    events[size++] = new Event(event);
+    int index = size;
+    for(int i = 0; i < size; i++) {
+        if(event.getEndTime() < (*events[i]).getStartTime()) {
+            index = i;
+            break;
+        }
+    }// 1 2, 3 4, 7 8
+    
+    for(int i = size; i > index; i--) {
+        events[i] = events[i - 1];
+    } 
+    events[index] = new Event(event);
+    size++;
     return true;
 }
 bool DaySchedule::removeEvent(const Event& event) {
@@ -78,6 +102,11 @@ const Event** DaySchedule::getEvents() const {
 int DaySchedule::getSize() const {
     return size;
 }
+
+Date DaySchedule::getDate() const {
+    return date;
+}
+
 DaySchedule::~DaySchedule() {
     free();
 }
