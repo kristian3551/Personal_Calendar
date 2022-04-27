@@ -83,11 +83,17 @@ bool Date::operator <(const Date& date) const {
     if(year < date.year) return true;
     if(year == date.year && month < date.month) return true;
     if(year == date.year && month == date.month
-        && day == date.day) return true;
+        && day < date.day) return true;
     return false;
 }
 bool Date::operator >(const Date& date) const {
     return !(*this < date) && *this != date;
+}
+bool Date::operator <=(const Date& date) const {
+    return (*this < date) || (*this == date);
+}
+bool Date::operator >=(const Date& date) const {
+    return (*this > date) || (*this == date);
 }
 
 String Date::toString() const {

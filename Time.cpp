@@ -49,7 +49,14 @@ bool Time::operator ==(const Time& time) const {
     return convertInSeconds() == time.convertInSeconds();
 }
 
+bool Time::operator <=(const Time& time) const {
+    return (*this < time) || (*this == time);
+}
+bool Time::operator >=(const Time& time) const {
+    return (*this > time) || (*this == time);
+}
+
 String Time::toString() const {
-    return String(hours).concat(":").concat(String(minutes))
-        .concat(":").concat(String(seconds)).concat("h");
+    return String(hours).concat(" ").concat(String(minutes))
+        .concat(" ").concat(String(seconds));
 }
