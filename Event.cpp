@@ -1,5 +1,6 @@
 #include "Event.h"
 #include <iostream>
+using namespace std;
 
 Event::Event(const String& name, const String& comment, const Date& date,
         const Time& startTime,
@@ -46,10 +47,10 @@ bool Event::operator ==(const Event& event) const {
         && (date == event.date) && (startTime == event.startTime) && (endTime == event.endTime);
 }
 
-std::ostream& operator<<(std::ostream& os, const Event& event) {
-    os << "Name: " << event.name << std::endl 
-        << "Comment: " << event.comment << std::endl << "Date: " << event.date.toString()
-    << std::endl << "From " << event.startTime.toString() << " to " << event.endTime.toString();
+ostream& operator<<(ostream& os, const Event& event) {
+    os << event.name.getLength() << " " << event.name << endl 
+        << event.comment.getLength() << " " <<  event.comment << endl << event.date.toString()
+    << endl << event.startTime.toString() << endl << event.endTime.toString();
     return os;
 }
 
@@ -58,4 +59,13 @@ bool Event::doEventsIntersect(const Event& event) const {
     if(endTime < event.startTime) return false;
     if(startTime > event.endTime) return false;
     return true;
+}
+
+void Event::print() const {
+    cout << "Name: " << name << endl;
+    cout << "Comment: " << comment << endl;
+    cout << "Date: " << date.getDay() << "/" << date.getMonth() << "/" << date.getYear() << endl;
+    cout << "From " << startTime.getHours() << ":" << startTime.getMinutes() << ":" << startTime.getSeconds();
+    cout << " to " << endTime.getHours() << ":" << endTime.getMinutes() << ":" << endTime.getSeconds() << endl 
+    << "---------------" << endl;
 }

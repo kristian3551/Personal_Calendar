@@ -27,6 +27,7 @@ public:
     void setEndTime(const Time&);
     bool operator ==(const Event&) const;
     bool doEventsIntersect(const Event&) const;
+    void print() const;
     friend std::ostream& operator<<(std::ostream&, const Event&);
 };
 
