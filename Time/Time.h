@@ -21,6 +21,7 @@ public:
     bool operator <=(const Time&) const;
     bool operator >=(const Time&) const;
     bool operator ==(const Time&) const;
+    Time operator +(const Time&) const;
     String toString() const;
 };
 
