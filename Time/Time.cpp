@@ -69,7 +69,7 @@ String Time::toString() const {
 }
 
 void Time::print() const {
-    std::cout << hours << ":" << minutes << ":" << seconds;
+    std::cout << hours << ":" << minutes << ":" << seconds << " h";
 }
 
 Time Time::operator +(const Time& time) const {

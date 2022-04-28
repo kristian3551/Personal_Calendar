@@ -1,4 +1,6 @@
 #include "Date.h"
+#include <iostream>
+using namespace std;
 
 Date::Date() {
     day = 31;
@@ -114,4 +116,17 @@ bool Date::isValidDate(int day, int month, int year) {
     else daysInMonth[1] = 28;
     if(day < 0 || day > daysInMonth[month - 1]) return false;
     return (Date(day, month, year, 5) >= Date(31, 3, 1916, 5));
+}
+
+void Date::print() const {
+   cout << day << "/" << month << "/" << year << " Day: ";
+   switch(this->dayOfWeek) {
+        case 0: cout << "Sunday"; break;
+        case 1: cout << "Monday"; break;
+        case 2: cout << "Tuesday"; break;
+        case 3: cout << "Wednesday"; break;
+        case 4: cout << "Thursday"; break;
+        case 5: cout << "Friday"; break;
+        case 6: cout << "Saturday"; break;
+    }
 }

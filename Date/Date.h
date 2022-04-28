@@ -27,6 +27,7 @@ public:
     bool operator >(const Date&) const;
     bool operator <=(const Date&) const;
     bool operator >=(const Date&) const;
+    void print() const;
     static bool isValidDate(int, int, int); 
     String toString() const;
 };

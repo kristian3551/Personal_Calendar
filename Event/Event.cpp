@@ -64,7 +64,9 @@ bool Event::doEventsIntersect(const Event& event) const {
 void Event::print() const {
     cout << "Name: " << name << endl;
     cout << "Comment: " << comment << endl;
-    cout << "Date: " << date.getDay() << "/" << date.getMonth() << "/" << date.getYear() << endl;
+    cout << "Date: ";
+    date.print();
+    cout << endl;
     cout << "From ";
     startTime.print();
     cout << " to ";
