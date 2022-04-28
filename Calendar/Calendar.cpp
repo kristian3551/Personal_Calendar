@@ -215,7 +215,7 @@ void Calendar::getStatsForPeriodInFile(const Date& date1, const Date& date2) {
         if(((days[i].getDate() >= date1) && (days[i].getDate() <= date2)))
             countOfEvents[days[i].getDate().getDayOfWeek()] += days[i].getSize();
     }
-    String filePath = String().concat(date1.getYear()).concat("-").concat(date1.getMonth())
+    String filePath = String("stats-").concat(date1.getYear()).concat("-").concat(date1.getMonth())
         .concat("-").concat(date1.getDay()).concat(".txt");
     ofstream file(filePath.toString());
     for(int i = 0; i < 7; i++) {
@@ -255,7 +255,12 @@ void Calendar::saveInFile() const {
 
 void Calendar::readFromFile() {
     ifstream file(DATABASE_FILE_PATH);
-    if(!file.is_open()) return;
+    if(!file.is_open()) {
+        capacity = 2;
+        days = new DaySchedule[capacity];
+        size = 0;
+        return;
+    }
     int countOfDaysInFile = 0;
     file >> countOfDaysInFile;
     days = new DaySchedule[countOfDaysInFile + 2];
