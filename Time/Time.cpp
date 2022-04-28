@@ -1,4 +1,5 @@
 #include "Time.h"
+#include <iostream>
 
 Time::Time(unsigned hours, unsigned minutes, unsigned seconds) {
     setHours(hours);
@@ -65,6 +66,10 @@ bool Time::operator >=(const Time& time) const {
 String Time::toString() const {
     return String(hours).concat(" ").concat(String(minutes))
         .concat(" ").concat(String(seconds));
+}
+
+void Time::print() const {
+    std::cout << hours << ":" << minutes << ":" << seconds;
 }
 
 Time Time::operator +(const Time& time) const {
