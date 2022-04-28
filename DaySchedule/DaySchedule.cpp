@@ -110,28 +110,28 @@ Date DaySchedule::getDate() const {
     return date;
 }
 
-void DaySchedule::findFreeTimeForEvent(const Time& time) const {
+bool DaySchedule::findFreeTimeForEvent(const Time& time) const {
     if(size == 0 || (time + WORK_TIME_START) <= events[0]->getStartTime()) {
         cout << "Available hour: ";
         WORK_TIME_START.print();
         cout << endl;
-        return;
+        return true;
     }
     if((events[size - 1]->getEndTime() + time) <= WORK_TIME_END) {
         cout << "Available hour: ";
         events[size - 1]->getEndTime().print();
         cout << endl;
-        return;
+        return true;
     }
     for(int i = 0; i < size - 1; i++) {
         if((events[i]->getEndTime() + time) <= events[i + 1]->getStartTime()) {
             cout << "Available hour: ";
             events[i]->getEndTime().print();
             cout << endl;
-            return;
+            return true;
         }
     }
-    cout << "There is no available time on this date!" << endl; 
+    return false;
 }
 
 DaySchedule::~DaySchedule() {

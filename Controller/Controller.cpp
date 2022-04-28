@@ -198,10 +198,19 @@ void Controller::searchByString() {
 
 void Controller::findFreeTimeForEvent() {
     cout << "You chose to find a free hour for event!" << endl;
-    cout << "Enter date (3 consequent numbers): ";
-    Date date;
+    cout << "Enter starting date (3 consequent numbers): ";
+    Date date1;
     try {
-        initDate(date);
+        initDate(date1);
+    }
+    catch(const String& str) {
+        cout << str << endl;
+        return;
+    }
+    cout << "Enter end date (3 consequent numbers): ";
+    Date date2;
+    try {
+        initDate(date2);
     }
     catch(const String& str) {
         cout << str << endl;
@@ -210,7 +219,7 @@ void Controller::findFreeTimeForEvent() {
     cout << "Enter time (3 consequent numbers): ";
     Time time;
     initTime(time);
-    calendar.findFreeTimeForEvent(date, time);
+    calendar.findFreeTimeForEvent(date1, date2, time);
 }
 
 void Controller::run() {

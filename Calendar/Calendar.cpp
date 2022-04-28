@@ -295,13 +295,23 @@ void Calendar::readFromFile() {
     }
 }
 
-void Calendar::findFreeTimeForEvent(const Date& date, const Time& time) const {
-    int dayIndex = getDayIndexByDate(date);
-    if(dayIndex == -1) {
-        cout << "The whole day is free!" << endl;
+void Calendar::findFreeTimeForEvent(const Date& date1, const Date& date2, const Time& time) const {
+    if(date1 > date2) {
+        cout << "Invalid period! Starting date should be less that ending date!" << endl;
         return;
     }
-    days[dayIndex].findFreeTimeForEvent(time);
+    for(Date d = date1; d <= date2; d.incrementDay()) {
+        int dayIndex = getDayIndexByDate(d);
+        if(dayIndex == -1) {
+            cout << "Available date: ";
+            d.print();
+            cout << endl;
+            cout << "The whole day is free!" << endl;
+            return;
+        }
+        if(days[dayIndex].findFreeTimeForEvent(time)) return;
+    }
+    cout << "There are no available hours this week!" << endl;
 }
 
 Calendar::~Calendar() {
