@@ -8,6 +8,11 @@ Date::Date() {
 }
 
 Date::Date(unsigned day, unsigned month, unsigned year) {
+    if(Date(day, month, year, 0) < Date(31, 3, 1916, 5)) {
+        day = 31;
+        month = 3;
+        year = 1916;
+    }
     setYear(year);
     setMonth(month);
     setDay(day);
@@ -101,7 +106,12 @@ String Date::toString() const {
     .concat(" ").concat(String(year));
 }
 
-void Date::fixChangeInCalendar() {
-    if(year == 1916 && month == 4 && day >= 1 && day <= 13)
-        day = 15;
+bool Date::isValidDate(int day, int month, int year) {
+    if(month < 0 || month > 12) return false;
+    if(year < 0) return false;
+    unsigned daysInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    if(year % 4 == 0 && year % 100 != 0 || year % 400 == 0) daysInMonth[1] = 29;
+    else daysInMonth[1] = 28;
+    if(day < 0 || day > daysInMonth[month - 1]) return false;
+    return (Date(day, month, year, 5) >= Date(31, 3, 1916, 5));
 }
