@@ -9,7 +9,6 @@ class Date {
     unsigned dayOfWeek;
     unsigned daysInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     void setDayOfWeek();
-    void fixChangeInCalendar();
     void setDay(unsigned day);
     void setMonth(unsigned month);
     void setYear(unsigned year);
@@ -28,6 +27,7 @@ public:
     bool operator >(const Date&) const;
     bool operator <=(const Date&) const;
     bool operator >=(const Date&) const;
+    static bool isValidDate(int, int, int); 
     String toString() const;
 };
 
