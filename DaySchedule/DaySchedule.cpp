@@ -52,6 +52,7 @@ DaySchedule& DaySchedule::operator=(const DaySchedule& schedule) {
     return *this;
 }
 bool DaySchedule::addEvent(const Event& event) {
+    if(event.getDate() != date) return false;
     if(capacity == size) 
         resize();
     for(int i = 0; i < size; i++) {
