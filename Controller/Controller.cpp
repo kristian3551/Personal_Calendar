@@ -10,26 +10,48 @@ void printDelimiter() {
     cout << "----------------------------------" << endl;
 }
 
-void Controller::addEvent() {
-    cout << "You chose to add an event to your calendar" << endl;
-    cout << "Enter name: ";
-    char name[MAX_NAME_LENGTH];
+void initName(char name[MAX_NAME_LENGTH]) {
     cin.getline(name, MAX_NAME_LENGTH);
-    cout << "Enter comment: ";
-    char comment[MAX_COMMENT_LENGTH];
+}
+
+void initComment(char comment[MAX_COMMENT_LENGTH]) {
     cin.getline(comment, MAX_COMMENT_LENGTH);
-    cout << "Enter date (3 consequent numbers): ";
+}
+
+void initDate(Date& date) {
     int day, month, year;
     cin >> day >> month >> year;
-    Date date(day, month, year);
-    cout << "Enter start time (3 consequent numbers): ";
+    date = Date(day, month, year);
+}
+
+void initTime(Time& time) {
     int hours, minutes, seconds;
     cin >> hours >> minutes >> seconds;
-    Time startTime(hours, minutes, seconds);
+    time = Time(hours, minutes, seconds);
+}
+
+void initEvent(Event& event) {
+    cout << "Enter name: ";
+    char name[MAX_NAME_LENGTH];
+    initName(name);
+    cout << "Enter comment: ";
+    char comment[MAX_COMMENT_LENGTH];
+    initComment(comment);
+    cout << "Enter date (3 consequent numbers): ";
+    Date date;
+    initDate(date);
+    cout << "Enter start time (3 consequent numbers): ";
+    Time startTime;
+    initTime(startTime);
     cout << "Enter end time (3 consequent numbers): ";
-    cin >> hours >> minutes >> seconds;
-    Time endTime(hours, minutes, seconds);
-    Event event(name, comment, date, startTime, endTime);
+    Time endTime;
+    initTime(endTime);
+    event = Event(name, comment, date, startTime, endTime);
+}
+void Controller::addEvent() {
+    cout << "You chose to add an event to your calendar" << endl;
+    Event event;
+    initEvent(event);
     bool res = calendar.addEvent(event);
     if(res) cout << "Successfully added event!" << endl;
     else cout << "There is an already saved event during that period of time!" << endl;
@@ -37,24 +59,8 @@ void Controller::addEvent() {
 
 void Controller::removeEvent() {
     cout << "You chose to remove an event to your calendar!" << endl;
-    cout << "Enter name: ";
-    char name[MAX_NAME_LENGTH];
-    cin.getline(name, MAX_NAME_LENGTH);
-    cout << "Enter comment: ";
-    char comment[MAX_COMMENT_LENGTH];
-    cin.getline(comment, MAX_COMMENT_LENGTH);
-    cout << "Enter date (3 consequent numbers): ";
-    int day, month, year;
-    cin >> day >> month >> year;
-    Date date(day, month, year);
-    cout << "Enter start time (3 consequent numbers): ";
-    int hours, minutes, seconds;
-    cin >> hours >> minutes >> seconds;
-    Time startTime(hours, minutes, seconds);
-    cout << "Enter end time (3 consequent numbers): ";
-    cin >> hours >> minutes >> seconds;
-    Time endTime(hours, minutes, seconds);
-    Event event(name, comment, date, startTime, endTime);
+    Event event;
+    initEvent(event);
     bool res = calendar.removeEvent(event);
     if(res) cout << "Successfully removed event!" << endl;
     else cout << "There is no such event in the database!" << endl;
@@ -63,9 +69,8 @@ void Controller::removeEvent() {
 void Controller::showDayEvents() {
     cout << "You chose to browse events on a specific day!" << endl;
     cout << "Enter date (3 consequent numbers): ";
-    int day, month, year;
-    cin >> day >> month >> year;
-    Date date(day, month, year);
+    Date date;
+    initDate(date);
     printDelimiter();
     cout << "Events: " << endl;
     calendar.printDay(date);
@@ -73,24 +78,8 @@ void Controller::showDayEvents() {
 
 void Controller::changeEvent() {
     cout << "You chose to change an event property! First you have to type the event details!" << endl;
-    cout << "Enter name: ";
-    char name[MAX_NAME_LENGTH];
-    cin.getline(name, MAX_NAME_LENGTH);
-    cout << "Enter comment: ";
-    char comment[MAX_COMMENT_LENGTH];
-    cin.getline(comment, MAX_COMMENT_LENGTH);
-    cout << "Enter date (3 consequent numbers): ";
-    int day, month, year;
-    cin >> day >> month >> year;
-    Date date(day, month, year);
-    cout << "Enter start time (3 consequent numbers): ";
-    int hours, minutes, seconds;
-    cin >> hours >> minutes >> seconds;
-    Time startTime(hours, minutes, seconds);
-    cout << "Enter end time (3 consequent numbers): ";
-    cin >> hours >> minutes >> seconds;
-    Time endTime(hours, minutes, seconds);
-    Event event(name, comment, date, startTime, endTime);
+    Event event;
+    initEvent(event);
     printDelimiter();
     cout << "Enter type of property (name, comment, date, startTime, endTime): ";
     char property[MAX_PROPERTY_LENGTH];
@@ -99,7 +88,7 @@ void Controller::changeEvent() {
     if(!strcmp(property, "name")) {
         cout << "Enter name: ";
         char newName[MAX_NAME_LENGTH];
-        cin.getline(newName, MAX_NAME_LENGTH);
+        initName(newName);
         bool res = calendar.changeName(event, newName);
         if(res) cout << "Successfully changed event name!" << endl;
         else cout << "Something went wrong!" << endl;
@@ -107,31 +96,31 @@ void Controller::changeEvent() {
     else if(!strcmp(property, "comment")) {
         cout << "Enter comment: ";
         char newComment[MAX_COMMENT_LENGTH];
-        cin.getline(newComment, MAX_COMMENT_LENGTH);
+        initComment(newComment);
         bool res = calendar.changeComment(event, newComment);
         if(res) cout << "Successfully changed event comment!" << endl;
         else cout << "Something went wrong!" << endl;
     }
     else if(!strcmp(property, "date")) {
         cout << "Enter date (3 consequent numbers): ";
-        cin >> day >> month >> year;
-        Date newDate(day, month, year);
+        Date newDate;
+        initDate(newDate);
         bool res = calendar.changeDate(event, newDate);
         if(res) cout << "Successfully changed event date!" << endl;
         else cout << "Something went wrong!" << endl;
     }
     else if(!strcmp(property, "startTime")) {
         cout << "Enter start time (3 consequent numbers): ";
-        cin >> hours >> minutes >> seconds;
-        Time newStartTime(hours, minutes, seconds);
+        Time newStartTime;
+        initTime(newStartTime);
         bool res = calendar.changeStartTime(event, newStartTime);
         if(res) cout << "Successfully changed event start time!" << endl;
         else cout << "Something went wrong!" << endl;
     }
     else if(!strcmp(property, "endTime")) {
         cout << "Enter end time (3 consequent numbers): ";
-        cin >> hours >> minutes >> seconds;
-        Time newEndTime(hours, minutes, seconds);
+        Time newEndTime;
+        initTime(newEndTime);
         bool res = calendar.changeEndTime(event, newEndTime);
         if(res) cout << "Successfully changed event end time!" << endl;
         else cout << "Something went wrong!" << endl;
@@ -141,12 +130,11 @@ void Controller::changeEvent() {
 void Controller::getStatsForEmployment() {
     cout << "You chose to create a file for employment!" << endl;
     cout << "Enter starting date (3 consequent numbers): ";
-    int day, month, year;
-    cin >> day >> month >> year;
-    Date date1(day, month, year);
+    Date date1;
+    initDate(date1);
     cout << "Enter ending date (3 consequent numbers): ";
-    cin >> day >> month >> year;
-    Date date2(day, month, year);
+    Date date2;
+    initDate(date2);
     calendar.getStatsForPeriodInFile(date1, date2);
     cout << "Successfully created file!" << endl;
 }
@@ -164,13 +152,11 @@ void Controller::searchByString() {
 void Controller::findFreeTimeForEvent() {
     cout << "You chose to find a free hour for event!" << endl;
     cout << "Enter date (3 consequent numbers): ";
-    int day, month, year;
-    cin >> day >> month >> year;
-    Date date(day, month, year);
+    Date date;
+    initDate(date);
     cout << "Enter time (3 consequent numbers): ";
-    int hours, minutes, seconds;
-    cin >> hours >> minutes >> seconds;
-    Time time(hours, minutes, seconds);
+    Time time;
+    initTime(time);
     calendar.findFreeTimeForEvent(date, time);
 }
 
