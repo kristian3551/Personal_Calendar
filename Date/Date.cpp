@@ -8,6 +8,11 @@ Date::Date() {
 }
 
 Date::Date(unsigned day, unsigned month, unsigned year) {
+    if(Date(day, month, year, 0) < Date(31, 3, 1916, 5)) {
+        day = 31;
+        month = 3;
+        year = 1916;
+    }
     setYear(year);
     setMonth(month);
     setDay(day);
