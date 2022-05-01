@@ -79,3 +79,7 @@ Time Time::operator +(const Time& time) const {
     copy.setHours(copy.hours + time.hours);
     return copy;
 }
+
+bool Time::operator !=(const Time& time) const {
+    return !(*this == time);
+}
