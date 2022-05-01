@@ -235,9 +235,7 @@ void Calendar::getStatsForPeriodInFile(const Date& date1, const Date& date2) {
 int Calendar::getCountOfEvents() const {
     int count = 0;
     for(int i = 0; i < size; i++) {
-        for(int j = 0; j < days[i].getSize(); j++) {
-            count++;
-        }
+        count += days[i].getSize();
     }
     return count;
 }
@@ -309,12 +307,17 @@ void Calendar::findFreeTimeForEvent(const Date& date1, const Date& date2, const 
             cout << "The whole day is free!" << endl;
             return;
         }
-        if(days[dayIndex].findFreeTimeForEvent(time)) return;
+        Time availableTime = days[dayIndex].findFreeTimeForEvent(time);
+        if(availableTime != Time()) {
+            cout << "Available time: ";
+            availableTime.print();
+            cout << endl;
+            return;
+        }
     }
     cout << "There are no available hours this week!" << endl;
 }
 
 Calendar::~Calendar() {
-    saveInFile();
     free();
 } 

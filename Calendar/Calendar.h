@@ -15,7 +15,6 @@ class Calendar {
     void copyFrom(const Calendar&);
     int getDayIndexByDate(const Date&) const;
     bool addDay(const Date&);
-    void saveInFile() const;
     void readFromFile();
     int getCountOfEvents() const;
 public:
@@ -33,6 +32,7 @@ public:
     void getStatsForPeriodInFile(const Date&, const Date&);
     void findFreeTimeForEvent(const Date&, const Date&, const Time&) const;
     Calendar& operator=(const Calendar&);
+    void saveInFile() const;
     ~Calendar();   
 };
 
