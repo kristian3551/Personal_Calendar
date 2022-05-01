@@ -22,7 +22,7 @@ public:
     const Event** getEvents() const;
     int getSize() const;
     Date getDate() const;
-    bool findFreeTimeForEvent(const Time&) const;
+    Time findFreeTimeForEvent(const Time&) const;
     ~DaySchedule();
 };
 
