@@ -36,10 +36,18 @@ void Event::setDate(const Date& date) {
     this->date = date;
 }
 void Event::setStartTime(const Time& time) {
-    startTime = time;
+    if(time > endTime) {
+        startTime = endTime;
+        endTime = time;
+    }
+    else startTime = time;
 }
 void Event::setEndTime(const Time& time) {
-    endTime = time;
+    if(time < startTime) {
+        endTime = startTime;
+        startTime = time;
+    }
+    else endTime = time;
 }
 
 bool Event::operator ==(const Event& event) const {
