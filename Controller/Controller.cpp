@@ -30,6 +30,8 @@ void initDate(Date& date) {
 void initTime(Time& time) {
     int hours, minutes, seconds;
     cin >> hours >> minutes >> seconds;
+    if(hours < 0 || minutes < 0 || seconds < 0)
+        throw String("Invalid time!");
     time = Time(hours, minutes, seconds);
 }
 
@@ -49,6 +51,8 @@ void initEvent(Event& event) {
     cout << "Enter end time (3 consequent numbers): ";
     Time endTime;
     initTime(endTime);
+    if(startTime >= endTime) 
+        throw String("Invalid period of time");
     event = Event(name, comment, date, startTime, endTime);
 }
 void Controller::addEvent() {
@@ -100,90 +104,77 @@ void Controller::showDayEvents() {
 }
 
 void Controller::changeEvent() {
-    cout << "You chose to change an event property! First you have to type the event details!" << endl;
-    Event event;
     try {
+        cout << "You chose to change an event property! First you have to type the event details!" << endl;
+        Event event;
         initEvent(event);
+        printDelimiter();
+        cout << "Enter type of property (name, comment, date, startTime, endTime): ";
+        char property[MAX_PROPERTY_LENGTH];
+        cin.ignore();
+        cin.getline(property, MAX_PROPERTY_LENGTH);
+        if(!strcmp(property, "name")) {
+                cout << "Enter name: ";
+                char newName[MAX_NAME_LENGTH];
+                initName(newName);
+                bool res = calendar.changeName(event, newName);
+                if(res) cout << "Successfully changed event name!" << endl;
+                else cout << "Something went wrong!" << endl;
+        }
+        else if(!strcmp(property, "comment")) {
+                cout << "Enter comment: ";
+                char newComment[MAX_COMMENT_LENGTH];
+                initComment(newComment);
+                bool res = calendar.changeComment(event, newComment);
+                if(res) cout << "Successfully changed event comment!" << endl;
+                else cout << "Something went wrong!" << endl;
+        }
+        else if(!strcmp(property, "date")) {
+                cout << "Enter date (3 consequent numbers): ";
+                Date newDate;
+                initDate(newDate);
+                bool res = calendar.changeDate(event, newDate);
+                if(res) cout << "Successfully changed event date!" << endl;
+                else cout << "Something went wrong!" << endl;
+        }
+        else if(!strcmp(property, "startTime")) {
+                cout << "Enter start time (3 consequent numbers): ";
+                Time newStartTime;
+                initTime(newStartTime);
+                bool res = calendar.changeStartTime(event, newStartTime);
+                if(res) cout << "Successfully changed event start time!" << endl;
+                else cout << "Something went wrong!" << endl;
+        }
+        else if(!strcmp(property, "endTime")) {
+                cout << "Enter end time (3 consequent numbers): ";
+                Time newEndTime;
+                initTime(newEndTime);
+                bool res = calendar.changeEndTime(event, newEndTime);
+                if(res) cout << "Successfully changed event end time!" << endl;
+                else cout << "Something went wrong!" << endl;
+        }
     }
     catch(const String& str) {
         cout << str << endl;
-        return;
-    }
-    printDelimiter();
-    cout << "Enter type of property (name, comment, date, startTime, endTime): ";
-    char property[MAX_PROPERTY_LENGTH];
-    cin.ignore();
-    cin.getline(property, MAX_PROPERTY_LENGTH);
-    if(!strcmp(property, "name")) {
-        cout << "Enter name: ";
-        char newName[MAX_NAME_LENGTH];
-        initName(newName);
-        bool res = calendar.changeName(event, newName);
-        if(res) cout << "Successfully changed event name!" << endl;
-        else cout << "Something went wrong!" << endl;
-    }
-    else if(!strcmp(property, "comment")) {
-        cout << "Enter comment: ";
-        char newComment[MAX_COMMENT_LENGTH];
-        initComment(newComment);
-        bool res = calendar.changeComment(event, newComment);
-        if(res) cout << "Successfully changed event comment!" << endl;
-        else cout << "Something went wrong!" << endl;
-    }
-    else if(!strcmp(property, "date")) {
-        cout << "Enter date (3 consequent numbers): ";
-        Date newDate;
-        try {
-            initDate(newDate);
-        }
-        catch(const String& str) {
-            cout << str << endl;
-            return;
-        }
-        bool res = calendar.changeDate(event, newDate);
-        if(res) cout << "Successfully changed event date!" << endl;
-        else cout << "Something went wrong!" << endl;
-    }
-    else if(!strcmp(property, "startTime")) {
-        cout << "Enter start time (3 consequent numbers): ";
-        Time newStartTime;
-        initTime(newStartTime);
-        bool res = calendar.changeStartTime(event, newStartTime);
-        if(res) cout << "Successfully changed event start time!" << endl;
-        else cout << "Something went wrong!" << endl;
-    }
-    else if(!strcmp(property, "endTime")) {
-        cout << "Enter end time (3 consequent numbers): ";
-        Time newEndTime;
-        initTime(newEndTime);
-        bool res = calendar.changeEndTime(event, newEndTime);
-        if(res) cout << "Successfully changed event end time!" << endl;
-        else cout << "Something went wrong!" << endl;
-    }
+    } 
 }
 
 void Controller::getStatsForEmployment() {
-    cout << "You chose to create a file for employment!" << endl;
-    cout << "Enter starting date (3 consequent numbers): ";
-    Date date1;
     try {
+        cout << "You chose to create a file for employment!" << endl;
+        cout << "Enter starting date (3 consequent numbers): ";
+        Date date1;
+        Date date2;
         initDate(date1);
+        cout << "Enter ending date (3 consequent numbers): ";
+        initDate(date2); 
+        calendar.getStatsForPeriodInFile(date1, date2);
+        cout << "Successfully created file!" << endl;
     }
     catch(const String& str) {
         cout << str << endl;
         return;
     }
-    cout << "Enter ending date (3 consequent numbers): ";
-    Date date2;
-    try {
-        initDate(date2);
-    }
-    catch(const String& str) {
-        cout << str << endl;
-        return;
-    }
-    calendar.getStatsForPeriodInFile(date1, date2);
-    cout << "Successfully created file!" << endl;
 }
 
 void Controller::searchByString() {
@@ -197,29 +188,24 @@ void Controller::searchByString() {
 }
 
 void Controller::findFreeTimeForEvent() {
-    cout << "You chose to find a free hour for event!" << endl;
-    cout << "Enter starting date (3 consequent numbers): ";
-    Date date1;
-    try {
+    try
+    {
+        cout << "You chose to find a free hour for event!" << endl;
+        cout << "Enter starting date (3 consequent numbers): ";
+        Date date1;
         initDate(date1);
-    }
-    catch(const String& str) {
-        cout << str << endl;
-        return;
-    }
-    cout << "Enter end date (3 consequent numbers): ";
-    Date date2;
-    try {
+        cout << "Enter end date (3 consequent numbers): ";
+        Date date2;
         initDate(date2);
+        cout << "Enter time (3 consequent numbers): ";
+        Time time;
+        initTime(time);
+        calendar.findFreeTimeForEvent(date1, date2, time);
     }
-    catch(const String& str) {
-        cout << str << endl;
-        return;
+    catch(const String& str)
+    {
+        cout << str << '\n';
     }
-    cout << "Enter time (3 consequent numbers): ";
-    Time time;
-    initTime(time);
-    calendar.findFreeTimeForEvent(date1, date2, time);
 }
 
 void Controller::run() {
@@ -257,4 +243,5 @@ void Controller::run() {
         printDelimiter();
     }
     cout << "Hope you enjoyed!";
+    calendar.saveInFile();
 }
