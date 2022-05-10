@@ -7,23 +7,16 @@ Time::Time(unsigned hours, unsigned minutes, unsigned seconds) {
     setSeconds(seconds);
 }
 void Time::setHours(unsigned hours) {
-    while(hours >= 24)
-        hours -= 24;
+    hours %= 24;
     this->hours = hours;
 }
 void Time::setMinutes(unsigned minutes) {
-    while(minutes >= 60) {
-        minutes -= 60;
-        setHours(hours + 1);
-    }
-    this->minutes = minutes;
+    setHours(hours + minutes / 60);
+    this->minutes = minutes % 60;
 }
 void Time::setSeconds(unsigned seconds) {
-    while(seconds >= 60) {
-        seconds -= 60;
-        setMinutes(minutes + 1);
-    }
-    this->seconds = seconds;
+    setMinutes(minutes + seconds / 60);
+    this->seconds = seconds % 60;
 }
 
 unsigned Time::getHours() const {

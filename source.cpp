@@ -6,6 +6,8 @@ using namespace std;
 // if ($?) { g++ (Get-ChildItem -Recurse *.cpp) -o source } ; if ($?) { .\source }
 
 int main() {
+    // doctest::Context c;
+    // c.run();
     Controller controller;
     controller.run();
 }
