@@ -93,11 +93,21 @@ bool DaySchedule::removeEvent(const Event& event) {
     return true;
 }
 
-bool DaySchedule::find(const Event& event) {
-    for(int i = 0; i < size; i++) {
-        if(*events[i] == event) return true;
+int binarySearch(const Event** events, int left, int right, const Event& event)
+{
+    if (right >= left) {
+        int midIndex = left + (right - left) / 2;
+        if (*events[midIndex] == event)
+            return midIndex;
+        if (events[midIndex]->getStartTime() > event.getStartTime())
+            return binarySearch(events, left, midIndex - 1, event);
+        return binarySearch(events, midIndex + 1, right, event);
     }
-    return false;
+    return -1;
+}
+
+bool DaySchedule::find(const Event& event) {
+    return binarySearch((const Event**)events, 0, size - 1, event) != -1;
 }
 const Event** DaySchedule::getEvents() const {
     return (const Event**)events;
