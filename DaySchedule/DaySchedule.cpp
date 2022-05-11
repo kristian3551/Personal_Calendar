@@ -66,7 +66,7 @@ bool DaySchedule::addEvent(const Event& event) {
             index = i;
             break;
         }
-    }// 1 2, 3 4, 7 8
+    }
     
     for(int i = size; i > index; i--) {
         events[i] = events[i - 1];
@@ -76,13 +76,7 @@ bool DaySchedule::addEvent(const Event& event) {
     return true;
 }
 bool DaySchedule::removeEvent(const Event& event) {
-    int index = -1;
-    for(int i = 0; i < size; i++) {
-        if(*events[i] == event) {
-            index = i;
-            break;
-        }
-    }
+    int index = getEventIndex(event);
     if(index == -1) {
         return false;
     }
@@ -106,8 +100,11 @@ int binarySearch(const Event** events, int left, int right, const Event& event)
     return -1;
 }
 
-bool DaySchedule::find(const Event& event) {
+bool DaySchedule::find(const Event& event) const {
     return binarySearch((const Event**)events, 0, size - 1, event) != -1;
+}
+int DaySchedule::getEventIndex(const Event& event) const {
+    return binarySearch((const Event**)events, 0, size - 1, event);
 }
 const Event** DaySchedule::getEvents() const {
     return (const Event**)events;
@@ -133,6 +130,23 @@ Time DaySchedule::findFreeTimeForEvent(const Time& time) const {
         return events[size - 1]->getEndTime();
     }
     return Time();
+}
+
+void DaySchedule::setNameByIndex(const String& name, int index) {
+    if(index < 0 || index >= size) return;
+    events[index]->setName(name);
+}
+void DaySchedule::setCommentByIndex(const String& comment, int index) {
+    if(index < 0 || index >= size) return;
+    events[index]->setComment(comment);
+}
+void DaySchedule::setStartTimeByIndex(const Time& startTime, int index) {
+    if(index < 0 || index >= size) return;
+    events[index]->setStartTime(startTime);
+}
+void DaySchedule::setEndTimeByIndex(const Time& endTime, int index) {
+    if(index < 0 || index >= size) return;
+    events[index]->setEndTime(endTime);
 }
 
 DaySchedule::~DaySchedule() {
