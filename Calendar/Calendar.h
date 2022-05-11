@@ -7,7 +7,7 @@
 #include "../Event/Event.h"
 
 class Calendar {
-    DaySchedule* days;
+    DaySchedule** days;
     int size;
     int capacity;
     void resize();
