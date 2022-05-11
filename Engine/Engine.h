@@ -2,7 +2,7 @@
 #define CONTROLLER_H
 #include "../Calendar/Calendar.h"
 
-class Controller {
+class Engine {
     Calendar calendar;
     void addEvent();
     void removeEvent();

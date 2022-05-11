@@ -12,10 +12,10 @@ class Date {
     void setDay(unsigned day);
     void setMonth(unsigned month);
     void setYear(unsigned year);
+    Date(unsigned day, unsigned month, unsigned year, unsigned dayOfWeek);
 public:
     Date();
     Date(unsigned day , unsigned month , unsigned year);
-    Date(unsigned day, unsigned month, unsigned year, unsigned dayOfWeek);
     void incrementDay();
     unsigned getDay() const;
     unsigned getMonth() const;

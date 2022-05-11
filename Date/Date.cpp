@@ -1,5 +1,6 @@
 #include "Date.h"
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 Date::Date() {
@@ -34,9 +35,8 @@ void Date::setDayOfWeek() {
     while(date != *this) {
         date.incrementDay();
         this->dayOfWeek++;
-        this->dayOfWeek %= 7;
     }
-
+    this->dayOfWeek %= 7;
 }
 
 void Date::setDay(unsigned day) {
@@ -109,8 +109,8 @@ String Date::toString() const {
 }
 
 bool Date::isValidDate(int day, int month, int year) {
-    if(month < 0 || month > 12) return false;
-    if(year < 0) return false;
+    if(month <= 0 || month > 12) return false;
+    if(year <= 0) return false;
     unsigned daysInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     if(year % 4 == 0 && year % 100 != 0 || year % 400 == 0) daysInMonth[1] = 29;
     else daysInMonth[1] = 28;
@@ -119,7 +119,7 @@ bool Date::isValidDate(int day, int month, int year) {
 }
 
 void Date::print() const {
-   cout << day << "/" << month << "/" << year << " Day: ";
+   cout << setfill('0') << setw(2) << day << "/" << setfill('0') << setw(2) << month << "/" << year << " Day: ";
    switch(this->dayOfWeek) {
         case 0: cout << "Sunday"; break;
         case 1: cout << "Monday"; break;

@@ -18,7 +18,12 @@ public:
     DaySchedule& operator=(const DaySchedule&);
     bool addEvent(const Event&);
     bool removeEvent(const Event&);
-    bool find(const Event&);
+    bool find(const Event&) const;
+    int getEventIndex(const Event&) const;
+    void setNameByIndex(const String&, int);
+    void setCommentByIndex(const String&, int);
+    void setStartTimeByIndex(const Time&, int);
+    void setEndTimeByIndex(const Time&, int);
     const Event** getEvents() const;
     int getSize() const;
     Date getDate() const;
