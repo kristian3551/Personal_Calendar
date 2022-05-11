@@ -1,4 +1,5 @@
 #include "Time.h"
+#include <iomanip>
 #include <iostream>
 
 Time::Time(unsigned hours, unsigned minutes, unsigned seconds) {
@@ -62,7 +63,7 @@ String Time::toString() const {
 }
 
 void Time::print() const {
-    std::cout << hours << ":" << minutes << ":" << seconds << " h";
+    std::cout <<std::setfill('0') << std::setw(2) << hours << ":" << std::setfill('0') << std::setw(2) << minutes << ":" << std::setfill('0') << std::setw(2) << seconds << " h";
 }
 
 Time Time::operator +(const Time& time) const {
