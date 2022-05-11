@@ -1,8 +1,8 @@
-#include "Controller.h"
+#include "Engine.h"
 #include <iostream>
 using namespace std;
 
-const int MAX_NAME_LENGTH = 65;
+const int MAX_NAME_LENGTH = 256;
 const int MAX_COMMENT_LENGTH = 1024;
 const int MAX_PROPERTY_LENGTH = 12;
 
@@ -42,7 +42,7 @@ void initEvent(Event& event) {
     cout << "Enter comment: ";
     char comment[MAX_COMMENT_LENGTH];
     initComment(comment);
-    cout << "Enter date (3 consequent numbers): ";
+    cout << "Enter date (format: dd mm year): ";
     Date date;
     initDate(date);
     cout << "Enter start time (3 consequent numbers): ";
@@ -55,7 +55,21 @@ void initEvent(Event& event) {
         throw String("Invalid period of time");
     event = Event(name, comment, date, startTime, endTime);
 }
-void Controller::addEvent() {
+void initPartialEvent(Event& event) {
+    cout << "Enter date (format: dd mm year): ";
+    Date date;
+    initDate(date);
+    cout << "Enter start time (3 consequent numbers): ";
+    Time startTime;
+    initTime(startTime);
+    cout << "Enter end time (3 consequent numbers): ";
+    Time endTime;
+    initTime(endTime);
+    if(startTime >= endTime) 
+        throw String("Invalid period of time");
+    event = Event("default", "default", date, startTime, endTime);
+} 
+void Engine::addEvent() {
     cout << "You chose to add an event to your calendar" << endl;
     Event event;
     try {
@@ -71,11 +85,11 @@ void Controller::addEvent() {
     else cout << "There is an already saved event during that period of time!" << endl;
 }
 
-void Controller::removeEvent() {
+void Engine::removeEvent() {
     cout << "You chose to remove an event to your calendar!" << endl;
     Event event;
     try {
-        initEvent(event);
+        initPartialEvent(event);
     }
     catch(const String& str) {
         cout << str << endl;
@@ -86,9 +100,9 @@ void Controller::removeEvent() {
     else cout << "There is no such event in the database!" << endl;
 }
 
-void Controller::showDayEvents() {
+void Engine::showDayEvents() {
     cout << "You chose to browse events on a specific day!" << endl;
-    cout << "Enter date (3 consequent numbers): ";
+    cout << "Enter date (format: dd mm year): ";
     Date date;
     try {
         initDate(date);
@@ -103,11 +117,11 @@ void Controller::showDayEvents() {
     calendar.printDay(date);
 }
 
-void Controller::changeEvent() {
+void Engine::changeEvent() {
     try {
         cout << "You chose to change an event property! First you have to type the event details!" << endl;
         Event event;
-        initEvent(event);
+        initPartialEvent(event);
         printDelimiter();
         cout << "Enter type of property (name, comment, date, startTime, endTime): ";
         char property[MAX_PROPERTY_LENGTH];
@@ -130,7 +144,7 @@ void Controller::changeEvent() {
                 else cout << "Something went wrong!" << endl;
         }
         else if(!strcmp(property, "date")) {
-                cout << "Enter date (3 consequent numbers): ";
+                cout << "Enter date (format: dd mm year): ";
                 Date newDate;
                 initDate(newDate);
                 bool res = calendar.changeDate(event, newDate);
@@ -159,14 +173,14 @@ void Controller::changeEvent() {
     } 
 }
 
-void Controller::getStatsForEmployment() {
+void Engine::getStatsForEmployment() {
     try {
         cout << "You chose to create a file for employment!" << endl;
-        cout << "Enter starting date (3 consequent numbers): ";
+        cout << "Enter starting date (format: dd mm year): ";
         Date date1;
         Date date2;
         initDate(date1);
-        cout << "Enter ending date (3 consequent numbers): ";
+        cout << "Enter ending date (format: dd mm year): ";
         initDate(date2); 
         calendar.getStatsForPeriodInFile(date1, date2);
         cout << "Successfully created file!" << endl;
@@ -177,7 +191,7 @@ void Controller::getStatsForEmployment() {
     }
 }
 
-void Controller::searchByString() {
+void Engine::searchByString() {
     cout << "You chose to print all events containing a specific string!" << endl;
     cout << "Enter string: ";
     char substring[MAX_COMMENT_LENGTH];
@@ -187,14 +201,14 @@ void Controller::searchByString() {
     calendar.printEventsByString(substring); 
 }
 
-void Controller::findFreeTimeForEvent() {
+void Engine::findFreeTimeForEvent() {
     try
     {
         cout << "You chose to find a free hour for event!" << endl;
-        cout << "Enter starting date (3 consequent numbers): ";
+        cout << "Enter starting date (format: dd mm year): ";
         Date date1;
         initDate(date1);
-        cout << "Enter end date (3 consequent numbers): ";
+        cout << "Enter end date (format: dd mm year): ";
         Date date2;
         initDate(date2);
         cout << "Enter time (3 consequent numbers): ";
@@ -208,9 +222,9 @@ void Controller::findFreeTimeForEvent() {
     }
 }
 
-void Controller::run() {
+void Engine::run() {
     cout << "Hello to my application!" << endl;
-    cout << "You can switch between 7 commands. Type a number (between 1 and 7) to choose the command and type -1 to exit! Enjoy!" << endl;
+    cout << "You can switch between 7 commands. Type a number (between 1 and 7) to choose the command.\nType 8 to clear the console\nType 0 to save and type -1 to exit! Enjoy!" << endl;
     int command = 0;
     while(command != -1) {
         cout << "Enter command: ";
@@ -237,6 +251,20 @@ void Controller::run() {
             } break;
             case 7: {
                 findFreeTimeForEvent();
+            } break;
+            case 0: {
+                try
+                {
+                    calendar.saveInFile();
+                    cout << "Successfully saved in file!" << endl;
+                }
+                catch(...)
+                {
+                    cout << "Something went wrong!" << endl;
+                }
+            } break;
+            case 8: {
+                system("CLS");
             } break;
             default: command = -1;
         }
