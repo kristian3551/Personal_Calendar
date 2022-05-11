@@ -51,8 +51,8 @@ void Event::setEndTime(const Time& time) {
 }
 
 bool Event::operator ==(const Event& event) const {
-    return name.equals(event.name) && comment.equals(event.comment)
-        && (date == event.date) && (startTime == event.startTime) && (endTime == event.endTime);
+    return (date == event.date) && (startTime == event.startTime) && 
+    (endTime == event.endTime);
 }
 
 ostream& operator<<(ostream& os, const Event& event) {
@@ -63,7 +63,6 @@ ostream& operator<<(ostream& os, const Event& event) {
 }
 
 bool Event::doEventsIntersect(const Event& event) const {
-    // if(date != event.getDate()) return false;
     if(endTime <= event.startTime) return false;
     if(startTime >= event.endTime) return false;
     return true;
