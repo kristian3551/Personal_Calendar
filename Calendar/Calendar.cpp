@@ -110,7 +110,8 @@ void Calendar::printEventsByString(const String& str) const {
 bool Calendar::changeDate(const Event& event, const Date& date) {
     int eventDayIndex = getDayIndexByDate(event.getDate());
     if(eventDayIndex == -1) return false;
-    if(days[eventDayIndex]->getEventIndex(event) == -1) return false;
+    int eventIndex = days[eventDayIndex]->getEventIndex(event);
+    if(eventIndex == -1) return false;
     int dayIndex = getDayIndexByDate(date);
     if(dayIndex == -1) {
         addDay(date);
@@ -118,6 +119,8 @@ bool Calendar::changeDate(const Event& event, const Date& date) {
     }
     days[eventDayIndex]->removeEvent(event);
     Event copy(event);
+    copy.setName(days[eventDayIndex]->getEvents()[eventIndex]->getName());
+    copy.setComment(days[eventDayIndex]->getEvents()[eventIndex]->getComment());
     copy.setDate(date);
     return days[dayIndex]->addEvent(copy);
 }
