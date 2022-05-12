@@ -34,7 +34,7 @@ TEST_SUITE("Event class") {
         CHECK(event1 == event);
         Event event2("Name1", "Comment", 
             Date(28, 4, 2022), Time(10, 0, 0), Time(12, 0, 0));
-        CHECK_FALSE(event2 == event);
+        CHECK(event2 == event);
         Event event3("Name", "Comment", 
             Date(29, 4, 2022), Time(11, 0, 0), Time(12, 0, 0));
         CHECK_FALSE(event3 == event);

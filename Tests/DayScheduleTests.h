@@ -50,8 +50,8 @@ TEST_SUITE("DaySchedule class") {
         Event event1("Name1", "Comment1", 
             Date(28, 4, 2022), Time(10, 0, 0), Time(12, 0, 0));
         day.addEvent(event);
-        CHECK_FALSE(day.removeEvent(event1));
-        CHECK(day.removeEvent(event));
+        CHECK(day.removeEvent(event1));
+        CHECK_FALSE(day.removeEvent(event));
         CHECK(day.getSize() == 0);
     }
     TEST_CASE("find should work") {
@@ -62,6 +62,16 @@ TEST_SUITE("DaySchedule class") {
         Event event1("Name1", "Comment1", 
             Date(28, 4, 2022), Time(10, 0, 0), Time(12, 0, 0));
         CHECK(day.find(event));
-        CHECK_FALSE(day.find(event1));
+        CHECK_EQ(day.getEventIndex(event), 0);
+        CHECK(day.find(event1));
+    }
+    TEST_CASE("findFreeTimeForEvent should work") {
+        DaySchedule day(Date(28, 4, 2022));
+        Event event("Name", "Comment", 
+            Date(28, 4, 2022), Time(10, 0, 0), Time(12, 0, 0));
+        day.addEvent(event);
+        CHECK_EQ(day.findFreeTimeForEvent(Time(2, 0, 0)), Time(8, 0, 0));
+        CHECK_EQ(day.findFreeTimeForEvent(Time(3, 0, 0)), Time(12, 0, 0));
+        CHECK_EQ(day.findFreeTimeForEvent(Time(7, 0, 0)), Time(0, 0, 0));
     }
 }
