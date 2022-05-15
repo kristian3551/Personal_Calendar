@@ -155,6 +155,8 @@ void Engine::changeEvent() {
                 cout << "Enter start time (3 consequent numbers): ";
                 Time newStartTime;
                 initTime(newStartTime);
+                if(event.getEndTime() <= newStartTime) 
+                    throw String("New start time should be smaller than end time!");
                 bool res = calendar.changeStartTime(event, newStartTime);
                 if(res) cout << "Successfully changed event start time!" << endl;
                 else cout << "Something went wrong!" << endl;
@@ -163,6 +165,8 @@ void Engine::changeEvent() {
                 cout << "Enter end time (3 consequent numbers): ";
                 Time newEndTime;
                 initTime(newEndTime);
+                if(event.getStartTime() >= newEndTime) 
+                    throw String("New end time should be bigger than start time!");
                 bool res = calendar.changeEndTime(event, newEndTime);
                 if(res) cout << "Successfully changed event end time!" << endl;
                 else cout << "Something went wrong!" << endl;
@@ -214,6 +218,7 @@ void Engine::findFreeTimeForEvent() {
         cout << "Enter time (3 consequent numbers): ";
         Time time;
         initTime(time);
+        printDelimiter();
         calendar.findFreeTimeForEvent(date1, date2, time);
     }
     catch(const String& str)
