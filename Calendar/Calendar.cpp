@@ -287,6 +287,9 @@ void Calendar::findFreeTimeForEvent(const Date& date1, const Date& date2, const 
         }
         Time availableTime = days[dayIndex]->findFreeTimeForEvent(time);
         if(availableTime != Time()) {
+            cout << "Available date: ";
+            d.print();
+            cout << endl;
             cout << "Available time: ";
             availableTime.print();
             cout << endl;
