@@ -150,13 +150,12 @@ bool Calendar::changeStartTime(const Event& event, const Time& time) {
     copy.setName(days[eventDayIndex]->getEvents()[eventIndex]->getName());
     copy.setComment(days[eventDayIndex]->getEvents()[eventIndex]->getComment());
     days[eventDayIndex]->removeEvent(event);
-    for(int i = 0; i < days[eventDayIndex]->getSize(); i++) {
-        if(copy.doEventsIntersect(*days[eventDayIndex]->getEvents()[i])) {
-            days[eventDayIndex]->addEvent(event);
-            return false;
-        }
+    if(!days[eventDayIndex]->addEvent(copy)) {
+        copy.setStartTime(event.getStartTime());
+        days[eventDayIndex]->addEvent(copy);
+        return false;
     }
-    return days[eventDayIndex]->addEvent(copy);
+    return true;
 }
 bool Calendar::changeEndTime(const Event& event, const Time& time) {
     int eventDayIndex = getDayIndexByDate(event.getDate());
@@ -168,13 +167,12 @@ bool Calendar::changeEndTime(const Event& event, const Time& time) {
     copy.setName(days[eventDayIndex]->getEvents()[eventIndex]->getName());
     copy.setComment(days[eventDayIndex]->getEvents()[eventIndex]->getComment());
     days[eventDayIndex]->removeEvent(event);
-    for(int i = 0; i < days[eventDayIndex]->getSize(); i++) {
-        if(copy.doEventsIntersect(*days[eventDayIndex]->getEvents()[i])) {
-            days[eventDayIndex]->addEvent(event);
-            return false;
-        }
+    if(!days[eventDayIndex]->addEvent(copy)) {
+        copy.setEndTime(event.getEndTime());
+        days[eventDayIndex]->addEvent(copy);
+        return false;
     }
-    return days[eventDayIndex]->addEvent(copy);
+    return true;
 }
 Calendar& Calendar::operator=(const Calendar& calendar) {
     if(this != &calendar) {
